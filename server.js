@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const port = 3015
 const router = express.Router()
+const admin = require('firebase-admin')
+const serviceAccount = require('./config/serviceAccountKey.json')
 
 app.get('/usersBackEnd', (req, res) => {
   // res.send('Hello, World!')
@@ -15,6 +17,11 @@ app.get('/usersBackEnd', (req, res) => {
       username: 'Mabel',
     },
   ])
+})
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'firebase-adminsdk-jbeuy@card-app-a32d0.iam.gserviceaccount.com',
 })
 
 app.listen(port, () => {
